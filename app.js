@@ -8,30 +8,30 @@ const path = require('path');
 var session = require('express-session');
 // 处理文件上传
 const formidableMiddleware = require('express-formidable');
-// web服务器
+require("./model/User")
+    // web服务器
 const app = express();
 // 开放静态资源
 app.use(express.static(path.join(__dirname, 'public')));
 // session配置
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
 }));
 // 处理post参数
 app.use(formidableMiddleware({
-	// 文件上传目录
-	uploadDir: path.join(__dirname, 'public', 'uploads'),
-	// 最大上传文件为2M
-	maxFileSize: 2 * 1024 * 1024,
-	// 保留文件扩展名
-	keepExtensions: true
+    // 文件上传目录
+    uploadDir: path.join(__dirname, 'public', 'uploads'),
+    // 最大上传文件为2M
+    maxFileSize: 2 * 1024 * 1024,
+    // 保留文件扩展名
+    keepExtensions: true
 }));
-
 // 数据库连接
-mongoose.connect('mongodb://localhost:27017/alibaixiu', { useNewUrlParser: true, useCreateIndex: true})
-	.then(() => console.log('数据库连接成功'))
-	.catch(() => console.log('数据库连接失败'));
+mongoose.connect('mongodb://localhost:27017/albx', { useNewUrlParser: true, useCreateIndex: true })
+    .then(() => console.log('数据库连接成功'))
+    .catch(() => console.log('数据库连接失败'));
 
 // 路由
 require('./routes')(app);
